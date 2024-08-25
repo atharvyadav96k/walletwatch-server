@@ -23,6 +23,6 @@ const handleValidationErrors = (req, res, next) => {
 };
 
 userRouter.post('/register', validateUser, handleValidationErrors, userController.userRegister);
-userRouter.post('/login', validateUser, handleValidationErrors, userController.userLogin);
+userRouter.post('/login', userController.userLogin);
 
 module.exports = userRouter;

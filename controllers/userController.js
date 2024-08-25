@@ -1,53 +1,97 @@
 const userSchema = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.userRegister = async (req, res) => {
     const { username, password, email } = req.body;
-
+    if (!username && !password && !email) {
+        return res.status(400).send({
+            success: false,
+            message: "all fields are required"
+        })
+    }
     try {
         const encryptedPass = await bcrypt.hash(password, 10);
-        const user = await userSchema({
+        const user = new userSchema({
             username: username,
             password: encryptedPass,
             email: email
         });
         await user.save();
+        const token = jwt.sign({
+            username: username,
+            password: password
+        },
+        process.env.JWT_SECRET);
+        console.log("token",token)
+            
+        res.cookie('secret', token,
+            {
+                maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+                httpOnly: true,
+                secure: true
+            });
         res.status(200).send({
             user,
-            message: "user created successfully",
+            message: "User created successfully",
             success: true
-        })
+        });
     } catch (error) {
-        if (error.message == 'E11000 duplicate key error collection: walletwatch.users index: username_1 dup key: { username: "atharvyadav96k" }') {
-            return res.status(400).send({
-                message: "username already used",
-                success: false
-            });
-        } else if (error.message == 'E11000 duplicate key error collection: walletwatch.users index: username_1 dup key: { username: \"sdfsdfsdf\" }') {
-            return res.status(400).send({
-                message: "email already used",
-                success: false
-            });
+        if (error.code === 11000) {
+            if (error.keyPattern.username) {
+                return res.status(400).send({
+                    message: "Username already used",
+                    success: false
+                });
+            } else if (error.keyPattern.email) {
+                return res.status(400).send({
+                    message: "Email already used",
+                    success: false
+                });
+            }
         }
-        console.log(error.message)
+        console.log(error.message);
         return res.status(400).send({
             message: error.message,
-            success: true
+            success: false
+        });
+    }
+};
+
+exports.userLogin = async (req, res) => {
+    const { username, password } = req.body;
+    if (!username && !password) {
+        return res.status(400).send({
+            success: false,
+            message: "all fields are required"
         })
     }
-
-}
-exports.userLogin = (req, res) => {
-    res.send("Login Successful")
-}
-
-const isValidUsername = (username) => {
-    username = username.trim();
-    if (username.length < 4) {
-        return false;
+    const user = await userSchema.findOne({ username: username });
+    console.log(user.password)
+    if (user) {
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
+            const token = jwt.sign({
+                username: username,
+                password: password
+            },
+            process.env.JWT_SECRET);
+            console.log("token", token)
+            res.cookie('secret', token,
+                {
+                    maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+                    httpOnly: true,
+                    secure: true
+                });
+            return res.status(200).send({
+                message: "login successful",
+                success: true
+            });
+        } else {
+            return res.status(400).send({
+                success: false,
+                message: "invalid username or password"
+            });
+        }
     }
-    if (username.includes(' ')) {
-        return false;
-    }
-    return true;
 }
