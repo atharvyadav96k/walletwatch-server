@@ -15,8 +15,10 @@ const connectDataBase = require('./connection/mongoose');
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
-
+app.get("*", (req, res)=>{
+    res.send("error");
+})
 connectDataBase();
 app.listen(3000, ()=>{
-    console.log("app is running on port number 3000")
-})
+    console.log("app is running on port number 3000");
+});
