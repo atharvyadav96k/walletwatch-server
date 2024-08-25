@@ -1,7 +1,7 @@
 const express = require('express');
 const spendRouter = express.Router();
 const spendController = require('../controllers/spendController');
-
+// user/spends/username/
 spendRouter.get('/', spendController.all);
 spendRouter.get('/add/', spendController.add);
 spendRouter.patch('/edit/:spendId', spendController.edit);
