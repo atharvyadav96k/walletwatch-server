@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const categorySchema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'User',
         require: true
     },
     date: {

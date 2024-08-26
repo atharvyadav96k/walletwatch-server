@@ -1,22 +1,50 @@
 const categorySchema = require('../models/category');
+const userSchema = require('../models/user');
+const spendSchema = require('../models/spends')
 const { findOneAndDelete } = require('../models/user');
 exports.share = (req, res) => {
     res.send("This is shared content");
+}
+exports.all = async (req, res) => {
+    const { userid } = req.params;
+    const userData = await userSchema.findById(userid).select('-username -password -email').populate({
+        path: 'category',
+        select: ' -userId -__v',
+        populate: {
+            path: 'spendIds',
+            select: '-__v'
+        }
+    })
+    return res.status(200).send({
+        success: true,
+        userData
+    })
 }
 exports.add = async (req, res) => {
     const { userId, categoryName, sharable } = req.query;
     try {
         if (userId && categoryName && sharable) {
-            const category = await categorySchema({
-                userId,
-                categoryName,
-                sharable
-            });
-            await category.save();
-            return res.status(200).send({
-                success: true,
-                message: "category created successfully"
-            });
+            const user = await userSchema.findById(userId);
+            if (user) {
+                const category = await categorySchema({
+                    userId,
+                    categoryName,
+                    sharable
+                });
+                await category.save();
+                user.category.push(category._id);
+                await user.save();
+                return res.status(200).send({
+                    success: true,
+                    message: "category created successfully"
+                });
+            } else {
+                return res.status(404).send({
+                    success: false,
+                    message: "User Not found"
+                })
+            }
+
         } else {
             return res.status(400).send({
                 success: false,
@@ -65,20 +93,25 @@ exports.edit = async (req, res) => {
 };
 exports.delete = async (req, res) => {
     const categoryId = req.params.categoryid;
-    try{
-        if(categoryId){
-          const category = await categorySchema.findOneAndDelete({_id: categoryId});
-          return res.status(200).send({
-            success: true,
-            message: "category deleted successfully"
-          })  
-        }else{
+    try {
+        if (categoryId) {
+            const category = await categorySchema.findOne({ _id: categoryId });
+            await spendSchema.deleteMany({_id: {$in: category.spendIds}});
+            await categorySchema.findOneAndDelete({_id: categoryId});
+            const user = await userSchema.findById(category.userId);
+            user.category.pop(category._id);
+            await user.save();
+            return res.status(200).send({
+                success: true,
+                message: "category deleted successfully"
+            })
+        } else {
             return res.status(400).send({
                 success: false,
                 message: 'unable to delete category'
             })
         }
-    }catch(error){
+    } catch (error) {
         console.log(error.message)
         return res.status(500).send({
             success: false,

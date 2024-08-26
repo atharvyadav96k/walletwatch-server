@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const spendSchema = mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
-        required: true
-    },
     title: {
         type: String,
         required: true
@@ -22,8 +17,8 @@ const spendSchema = mongoose.Schema({
         type: String,
     },
     date: {
-        type: String,
-        required: true
+        type: Date,
+        default: Date.now
     }
 })
 

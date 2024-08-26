@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    spends: [
+    category: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'spends'
+            ref: 'categorys'
         }
     ],
 }, 
