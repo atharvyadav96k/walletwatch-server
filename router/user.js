@@ -1,10 +1,10 @@
 const express = require('express');
-const spendRouter = require('../router/spends')
 const categoryRouter = require('./category');
 
 const { body, validationResult } = require('express-validator');
 const userRouter = express.Router();
 const userController = require('../controllers/userController');
+
 const validateUser = [
   body('email').isEmail().withMessage('Enter a valid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
@@ -27,7 +27,7 @@ const handleValidationErrors = (req, res, next) => {
 
 userRouter.post('/register', validateUser, handleValidationErrors, userController.userRegister);
 userRouter.post('/login', userController.userLogin);
-userRouter.use('/spends/:username', spendRouter);
+
 userRouter.use('/category/:username', categoryRouter);
 
 module.exports = userRouter;
