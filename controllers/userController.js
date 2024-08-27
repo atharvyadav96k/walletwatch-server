@@ -34,7 +34,8 @@ exports.userRegister = async (req, res) => {
         res.status(200).send({
             user,
             message: "User created successfully",
-            success: true
+            success: true,
+            userId: user._id
         });
     } catch (error) {
         if (error.code === 11000) {
@@ -63,7 +64,7 @@ exports.userLogin = async (req, res) => {
     if (!username && !password) {
         return res.status(400).send({
             success: false,
-            message: "all fields are required"
+            message: "all fields are required",
         })
     }
     const user = await userSchema.findOne({ username: username });
@@ -85,7 +86,8 @@ exports.userLogin = async (req, res) => {
                 });
             return res.status(200).send({
                 message: "login successful",
-                success: true
+                success: true,
+                userId: user._id
             });
         } else {
             return res.status(400).send({
