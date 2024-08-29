@@ -9,7 +9,7 @@
 
 <h4 align="center">walletwatch api build to note your spends build on top of <a href="https://nodejs.org/en/blog/release/v20.16.0" target="_blank">node</a>.</h4>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
     <img src="https://badge.fury.io/js/electron-markdownify.svg"
          alt="Gitter">
@@ -21,7 +21,7 @@
   <a href="https://www.paypal.me/AmitMerchant">
     <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
   </a>
-</p>
+</p> -->
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -65,7 +65,7 @@ $ npm start
 
 ## Emailware
 
-wallet is an spends tracker app . Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <atharvyadav96k@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
+wallet is an spends tracker app . Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <atharvyadav96k@gmail.com> about anything you'd want to say about this api. I'd really appreciate it!
 
 ## Credits
 
@@ -73,22 +73,7 @@ This software uses the following open source packages:
 
 - [Node.js](https://nodejs.org/)
 
-## Support
 
-<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
-<p>Or</p> 
-
-<a href="https://www.patreon.com/amitmerchant">
-	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
-
-## You may also like...
-
-- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
-- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
-
-## License
 
 MIT
 
