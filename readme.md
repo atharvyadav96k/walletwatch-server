@@ -62,7 +62,7 @@ $ npm install
 # Run the app
 $ npm start
 ```
-### [how to use it](https://github.com/atharvyadav96k/walletwatch-server/wiki)
+### [how to use api](https://github.com/atharvyadav96k/walletwatch-server/wiki)
 
 ## Emailware
 
