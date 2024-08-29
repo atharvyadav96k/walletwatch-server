@@ -62,10 +62,14 @@ $ npm install
 # Run the app
 $ npm start
 ```
+## [more on use api](https://github.com/atharvyadav96k/walletwatch-server/wiki)
 
 ## Emailware
 
 wallet is an spends tracker app . Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <atharvyadav96k@gmail.com> about anything you'd want to say about this api. I'd really appreciate it!
+
+
+
 
 ## Credits
 
