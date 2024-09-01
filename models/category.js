@@ -16,7 +16,8 @@ const categorySchema = mongoose.Schema({
     },
     shareable: {
         type: Boolean,
-        require: true
+        require: true,
+        default : false
     },
     spendIds: [  
         {
