@@ -10,7 +10,7 @@ const apiRouter = require('./routes/apiRouter');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: 'https://sensational-cendol-889d4c.netlify.app' }));
 
 
 require('dotenv').config();
